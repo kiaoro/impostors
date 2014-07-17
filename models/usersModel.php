@@ -67,6 +67,18 @@ class UsersModel extends Model {
         }
     }
     
+    public function getUserByLinkedinId($linkedInId) {
+        if (!empty($linkedInId)) {
+            $sql = "SELECT * FROM users WHERE linkedin_id = ?";
+            $this->_setSql($sql);
+            $userDetails = $this->getRow(array($linkedInId));
+            if (empty($userDetails)) {
+                return false;
+            }
+            return $userDetails;
+        }
+    }
+    
 }
 
 ?>

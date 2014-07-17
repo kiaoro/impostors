@@ -12,7 +12,8 @@ class AuthController extends Controller
         if (isset($_SESSION['app_user'])) {
             $usersModel = new UsersModel();
             $this->_user = $usersModel->getUserById($_SESSION['app_user']);
-        }
+        } 
+            
         if (empty($this->_user)) {
             header('Location:/?load=login/index');
         } else {
@@ -28,8 +29,7 @@ class AuthController extends Controller
         $this->_buildMenu();
     }
 
-    public function index()
-    {
+    public function index() {
         header('Location:/?load=login/index');
     }
 
