@@ -19,17 +19,44 @@ class LinkedinModel extends Model {
         return json_decode($response);
     }
     
-    public function getCurrentUser() {
-        $user  = $this->fetch('GET', '/v1/people/~:(id,firstName,lastName)');
-        if (!empty($user)) {
-            //$view->set('name', $user->firstName." ".$user->lastName);
-            //$view->set('link', $user->publicProfileUrl);
-            //$view->set('numConnections', $user->numConnections);
-            //$view->set('headline', $user->headline);
-            //$picture = $this->fetch('GET', '/v1/people/'.$this->postData['linkedin_id'].'/picture-urls::(original)');
-            //$view->set('pictureUrl', (!empty($picture->values[0]) ? $picture->values[0] : $user->pictureUrl));
-        } 
+    public function getCurrentUser($fullProfile=false) {
+        if ($fullProfile) {
+            $fields = array(
+                "id", 
+                "first-name", 
+                "last-name", 
+                "location", 
+                "industry", 
+                "num-connections", 
+                "positions", 
+                "picture-url", 
+                "email-address", 
+                "interests", 
+                //"languages", 
+                //"skills", 
+                //"three-current-positions", 
+                //"three-past-positions", 
+                //"num-recommenders", 
+                //"recommendations-received", 
+            );
+            $user = $this->fetch('GET', '/v1/people/~:('.implode(",", $fields).')');
+        } else {
+            $user = $this->fetch('GET', '/v1/people/~:(id,first-name,last-name,location)');
+        }
+        print_r($user);
         return $user;
+    }
+    
+    public function getConnection($id) {
+        $connection = $this->fetch('GET', '/v1/people/id='.$id.":(first-name,last-name,location,interests)");
+        print_r($connection);
+        return $connection;
+    }
+    
+    public function getCurrentUserConnections() {
+        $connections = $this->fetch('GET', '/v1/people/~/connections');
+        print_r($connections);
+        return $connections->values;
     }
     
 }

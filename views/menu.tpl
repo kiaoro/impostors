@@ -1,4 +1,4 @@
-<div id="menu">
+<!--<div id="menu">
     <ul>
         <li><a href="/?load=home/index" <?php if ($controller=='home') : ?>class='active'<?php endif; ?>>Home</a></li>
         <?php if (!empty($menu)) : ?>
@@ -7,4 +7,4 @@
             <?php endforeach; ?>
         <?php endif; ?>
     </ul>
-</div>
+</div>-->
